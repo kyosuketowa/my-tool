@@ -2,13 +2,15 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ホームページ（サンプル）</title>
+    <title>ホームページ</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(to right, #f0f0f0, #fff);
             margin: 0;
             padding: 0;
+            text-align: center;
+            margin-top: 50px;
         }
         header {
             text-align: center;
@@ -41,21 +43,57 @@
         .menu a:hover {
             background-color: #FB8C00;
         }
+        #password-area {
+            margin-top: 30px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #protected-content {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h2>ホーム画面</h2>
-    </header>
-    
-    <div class="container">
+
+<header>
+    <h2>ホーム画面</h2>
+</header>
+
+<div class="container">
+    <div id="password-area">
+        <h3>パスワードを入力してください</h3>
+        <input type="password" id="password" placeholder="パスワード">
+        <button onclick="checkPassword()">ログイン</button>
+    </div>
+
+    <div id="protected-content">
         <h1>ツール一覧</h1>
         <div class="menu">
-            <!-- 中古カメラツールページへのリンク -->
             <a href="camera.ebay_tool.html">中古カメラツール</a>
-            <!-- 他にもツールを増やすなら、ここにリンクを追加 -->
-            <!-- <a href="another_tool.html">他のツール</a> -->
         </div>
     </div>
+</div>
+
+<script>
+    function checkPassword() {
+        const input = document.getElementById("password").value;
+        const correctPassword = "kotukotu";
+
+        if (input === correctPassword) {
+            document.getElementById("protected-content").style.display = "block";
+            document.getElementById("password-area").style.display = "none";
+        } else {
+            alert("パスワードが違います。もう一度入力してください。");
+        }
+    }
+</script>
+
 </body>
 </html>
