@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>eBay Camera HTML Generator (Inline Styled Output + Extras)</title>
+    <style>
+        /* ツール側(フォーム)の見た目をCSSで管理 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #e3f2fd, #fff);
+        }
+        h1 {
+            text-align: center;
+            background: #2196F3;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            font-size: 1.8rem;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+        .section {
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        select, input[type="text"], textarea {
+            width: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            margin: 0;
+        }
+        button {
+            background-color: #FF9800;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #FB8C00;
+        }
+        #output-container {
+            position: relative;
+        }
+        #output {
+            font-family: "Courier New", monospace;
+            background: #f9f9f9;
+            padding: 10px;
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        /* プレビュー用のdiv */
+        #preview {
+            display: none; /* 初期状態は非表示 */
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>eBay Camera HTML Generator</h1>
+    <div class="container">
+
+        <!-- シリアル番号 -->
+        <div class="section">
+            <label for="serial-number">シリアル番号:</label>
+            <input type="text" id="serial-number" placeholder="例: 12345678">
+        </div>
+
+        <!-- シャッター回数 -->
+        <div class="section">
+            <label for="shutter-count">シャッター回数:</label>
+            <input type="text" id="shutter-count" placeholder="例: 12345">
+        </div>
+
+        <!-- 商品全体の状態 -->
+        <div class="section">
+            <label for="condition">商品全体の状態:</label>
+            <select id="condition">
+                <option value="">--選択--</option>
+                <option value="New">新品 (New)</option>
+                <option value="New other">新品（開封済み） (New other)</option>
+                <option value="Top mint">非常に良い (Top mint)</option>
+                <option value="Mint">非常に良い (Mint)</option>
+                <option value="Excellent">良い (Excellent)</option>
+                <option value="Good">やや良い (Good)</option>
+                <option value="Fair">並品 (Fair)</option>
+                <option value="AS IS">現状品 (AS IS)</option>
+            </select>
+        </div>
+
+        <!-- 外観 -->
+        <div class="section">
+            <label for="appearance">外観の状態:</label>
+            <select id="appearance">
+                <option value="">--選択--</option>
+                <option value="No visible scuffs or scratches.">目立つ傷なし</option>
+                <option value="Minor scuffs from normal use.">通常使用による小さな傷</option>
+                <option value="Noticeable scratches and signs of wear.">目立つ傷と使用感あり</option>
+                <option value="Heavy wear with significant scratches.">大きな傷と摩耗</option>
+            </select>
+        </div>
+
+        <!-- 光学部 -->
+        <div class="section">
+            <label for="finder">ファインダー:</label>
+            <select id="finder">
+                <option value="">--選択--</option>
+                <option value="Clean and clear. No fog, no fungus, no scratches.">クリアで傷なし</option>
+                <option value="Minor dust visible but fully usable.">少量の埃あり、使用可能</option>
+                <option value="Fog and scratches present. Needs cleaning.">曇りと傷あり、清掃必要</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <label for="lens">レンズ:</label>
+            <select id="lens">
+                <option value="">--選択--</option>
+                <option value="Crystal clear. No scratches, no fungus.">非常にクリア</option>
+                <option value="Moderate scratches and some dust.">中程度の傷と埃あり</option>
+                <option value="Significant scratches and fungus present.">大きな傷とカビあり</option>
+            </select>
+        </div>
+
+        <!-- 機能 -->
+        <div class="section">
+            <label for="shutter">シャッター:</label>
+            <select id="shutter">
+                <option value="">--選択--</option>
+                <option value="Works perfectly. Accurate at all speeds.">正常動作</option>
+                <option value="Occasional misfire.">たまに誤動作</option>
+                <option value="Not functioning.">動作せず</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <label for="aperture">絞り:</label>
+            <select id="aperture">
+                <option value="">--選択--</option>
+                <option value="Smooth and responsive.">スムーズで応答性あり</option>
+                <option value="Sticky at times.">たまに粘りあり</option>
+                <option value="Not working.">動作せず</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <label for="flash">フラッシュ:</label>
+            <select id="flash">
+                <option value="">--選択--</option>
+                <option value="Fully operational with no misfires.">正常動作</option>
+                <option value="Occasional misfire.">たまに誤動作</option>
+                <option value="Not working.">動作せず</option>
+            </select>
+        </div>
+
+        <!-- 付属品チェックボックス -->
+        <div class="section">
+            <label>付属品 (Included Accessories):</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="battery"> バッテリー</label>
+                <label><input type="checkbox" id="charger"> 充電器</label>
+                <label><input type="checkbox" id="strap"> ストラップ</label>
+                <label><input type="checkbox" id="box"> 箱</label>
+            </div>
+        </div>
+
+        <!-- 出力 -->
+        <div class="section">
+            <!-- HTML生成ボタン -->
+            <button onclick="generateHTML()">Generate HTML</button>
+            <!-- 表示切り替えボタン -->
+            <button id="toggleViewBtn" onclick="toggleView()" style="margin-left: 10px;">Toggle View</button>
+            <!-- 装飾付きHTMLをコピーするボタン -->
+            <button id="copyStyledHTMLBtn" onclick="copyStyledHTML()" style="margin-left: 10px;">Copy Styled HTML</button>
+
+            <div id="output-container">
+                <!-- テキスト表示 (ソースコード) -->
+                <textarea id="output" rows="10" readonly></textarea>
+                <!-- レンダリングプレビュー用のdiv (装飾付き) -->
+                <div id="preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentView = "text"; // 今どのビューが表示されているかを管理 ("text" or "preview")
+
+        function generateHTML() {
+            // 各種入力情報を取得
+            const serialNumber = document.getElementById("serial-number").value || "N/A";
+            const shutterCount = document.getElementById("shutter-count").value || "N/A";
+            const condition = document.getElementById("condition").value || "N/A";
+            const appearance = document.getElementById("appearance").value || "N/A";
+            const finder = document.getElementById("finder").value || "N/A";
+            const lens = document.getElementById("lens").value || "N/A";
+            const shutter = document.getElementById("shutter").value || "N/A";
+            const aperture = document.getElementById("aperture").value || "N/A";
+            const flash = document.getElementById("flash").value || "N/A";
+
+            // 付属品チェック状態を取得
+            const accessories = [];
+            if (document.getElementById("battery").checked) accessories.push("Battery");
+            if (document.getElementById("charger").checked) accessories.push("Charger");
+            if (document.getElementById("strap").checked) accessories.push("Strap");
+            if (document.getElementById("box").checked) accessories.push("Box");
+
+            // 付属品セクションの生成
+            let accessoriesHTML = "";
+            if (accessories.length > 0) {
+                accessoriesHTML = `
+    <section style="padding: 15px; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #f8bbd0, #f48fb1); color: #fff;">
+      <h2 style="font-size: 22px; margin-top: 0; border-left: 5px solid #ffffff; padding-left: 10px;">
+        Included Accessories
+      </h2>
+      <ul style="list-style: none; padding-left: 0; margin: 10px 0;">
+        ${accessories.map(item => `<li>${item}</li>`).join("")}
+      </ul>
+    </section>`;
+            }
+
+            // 各セクションのHTMLを生成
+            const defaultDescriptionHTML = `
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; border-left: 5px solid #2196F3; padding-left: 10px;">
+      Description
+    </h2>
+    <p style="margin: 5px 0;">Used</p>
+  </section>`;
+
+            const defaultShippingHTML = `
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; border-left: 5px solid #2196F3; padding-left: 10px;">
+      Shipping
+    </h2>
+    <ul style="list-style: none; padding-left: 0; margin: 10px 0;">
+      <li>DHL</li>
+      <li>Fedex</li>
+      <li>UPS</li>
+    </ul>
+  </section>`;
+
+            // International Buyers セクション
+            const defaultIntlBuyersHTML = `
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; border-left: 5px solid #2196F3; padding-left: 10px;">
+      International Buyers - Please Note
+    </h2>
+    <p style="margin: 5px 0;">
+      Import duties, taxes, and charges are not included in the item price or shipping cost. These charges are the buyer's responsibility. Please check with your country's customs office to determine what these additional costs will be prior to bidding or buying.
+    </p>
+    <p style="margin: 5px 0;">
+      Thank you for your understanding.
+    </p>
+  </section>`;
+
+            // インラインスタイル付きHTML全体を生成
+            let html = `
+<div style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0 auto; max-width: 800px;">
+  <h1 style="font-size: 28px; color: #333; border-bottom: 2px solid #2196F3; padding-bottom: 10px; margin-top: 20px;">
+    Item Title
+  </h1>
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; border-left: 5px solid #2196F3; padding-left: 10px;">
+      Details
+    </h2>
+    <ul style="list-style: none; padding-left: 0; margin: 10px 0;">
+      <li><strong>Total Condition:</strong> ${condition}</li>
+      <li><strong>Serial Number:</strong> ${serialNumber}</li>
+      <li><strong>Shutter Count:</strong> ${shutterCount}</li>
+    </ul>
+  </section>
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; border-left: 5px solid #2196F3; padding-left: 10px;">
+      Appearance
+    </h2>
+    <p style="margin: 5px 0;">${appearance}</p>
+  </section>
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; border-left: 5px solid #2196F3; padding-left: 10px;">
+      Optics
+    </h2>
+    <p style="margin: 5px 0;"><strong>Finder:</strong> ${finder}</p>
+    <p style="margin: 5px 0;"><strong>Lens:</strong> ${lens}</p>
+  </section>
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; border-left: 5px solid #2196F3; padding-left: 10px;">
+      Functional
+    </h2>
+    <p style="margin: 5px 0;"><strong>Shutter:</strong> ${shutter}</p>
+    <p style="margin: 5px 0;"><strong>Aperture:</strong> ${aperture}</p>
+    <p style="margin: 5px 0;"><strong>Flash:</strong> ${flash}</p>
+  </section>
+  ${accessoriesHTML}
+  ${defaultDescriptionHTML}
+  ${defaultShippingHTML}
+  ${defaultIntlBuyersHTML}
+</div>`;
+
+            // 万が一、生成後に「????...」が残っている場合は削除 (念のため)
+            html = html.replace(/[\?]+/g, "");
+            // 改行と余分な空白を1スペースに統一
+            html = html.replace(/\n\s*/g, " ");
+
+            // テキストエリアに出力 (ソースコード)
+            document.getElementById("output").value = html.trim();
+
+            // プレビュー領域にもHTMLを設定 (装飾付きでブラウザに表示)
+            document.getElementById("preview").innerHTML = html.trim();
+        }
+
+        // 表示切り替え用
+        function toggleView() {
+            const output = document.getElementById("output");
+            const preview = document.getElementById("preview");
+            const toggleButton = document.getElementById("toggleViewBtn");
+
+            if (currentView === "text") {
+                // テキスト表示 -> プレビュー表示に切り替え
+                output.style.display = "none";
+                preview.style.display = "block";
+                toggleButton.textContent = "Toggle View (Show Code)";
+                currentView = "preview";
+            } else {
+                // プレビュー表示 -> テキスト表示に切り替え
+                preview.style.display = "none";
+                output.style.display = "block";
+                toggleButton.textContent = "Toggle View (Show Preview)";
+                currentView = "text";
+            }
+        }
+
+        // 装飾付きHTMLをクリップボードにコピーする
+        function copyStyledHTML() {
+            const previewElem = document.getElementById("preview");
+            // preview内の「HTMLソース」(タグ・インラインCSS含む)を取得
+            const htmlContent = previewElem.innerHTML.trim();
+
+            // 1) モダンAPI (navigator.clipboard.write) を試す
+            // "text/html" 形式でクリップボードへ書き込む
+            if (navigator.clipboard && window.isSecureContext) {
+                const blobInput = new Blob([htmlContent], { type: "text/html" });
+                const data = [new ClipboardItem({ "text/html": blobInput })];
+
+                navigator.clipboard.write(data).then(() => {
+                    alert("Copied styled HTML to the clipboard (using text/html)!");
+                }).catch(err => {
+                    console.warn("Fallback to execCommand due to error:", err);
+                    fallbackCopyStyledHTML(htmlContent);
+                });
+            } else {
+                // 2) HTTPS でない or 対応していない場合はフォールバック
+                fallbackCopyStyledHTML(htmlContent);
+            }
+        }
+
+        // フォールバック: contentEditable領域にHTMLを差し込んでコピー
+        function fallbackCopyStyledHTML(htmlContent) {
+            // 一時的にdivを作成
+            const tempDiv = document.createElement("div");
+            tempDiv.contentEditable = true;
+            // 画面外に配置
+            tempDiv.style.position = "fixed";
+            tempDiv.style.left = "-9999px";
+
+            // HTMLソースを差し込む
+            tempDiv.innerHTML = htmlContent;
+
+            // bodyに追加
+            document.body.appendChild(tempDiv);
+
+            // 選択範囲をtempDiv内に指定
+            const range = document.createRange();
+            range.selectNodeContents(tempDiv);
+
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            // execCommand('copy') 実行
+            try {
+                document.execCommand("copy");
+                alert("Copied styled HTML to the clipboard (fallback execCommand)!");
+            } catch (err) {
+                console.error("Unable to copy via execCommand", err);
+            }
+
+            // 後始末
+            document.body.removeChild(tempDiv);
+        }
+    </script>
+</body>
+</html>

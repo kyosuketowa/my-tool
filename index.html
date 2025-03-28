@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ホームページ（サンプル）</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #f0f0f0, #fff);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            background: #2196F3;
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        .menu {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .menu a {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background-color: #FF9800;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .menu a:hover {
+            background-color: #FB8C00;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>ホーム画面</h2>
+    </header>
+    
+    <div class="container">
+        <h1>ツール一覧</h1>
+        <div class="menu">
+            <!-- 中古カメラツールページへのリンク -->
+            <a href="camera.ebay_tool.html">中古カメラツール</a>
+            <!-- 他にもツールを増やすなら、ここにリンクを追加 -->
+            <!-- <a href="another_tool.html">他のツール</a> -->
+        </div>
+    </div>
+</body>
+</html>
