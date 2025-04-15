@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>eBay カメラ用HTML生成ツール (UI: JP / Output: EN)</title>
+  <title>eBay ゲーム機本体用HTML生成ツール (UI: JP / Output: EN)</title>
   <!-- Google Font: Poppins -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
       font-weight: 600;
       color: #ffebee;
     }
-    select, input[type="text"], textarea {
+    select, input[type="text"] {
       width: 100%;
       margin-top: 5px;
       padding: 10px;
@@ -119,8 +119,6 @@
     #toggleViewBtn {
       margin-right: 10px;
     }
-
-    /* 商品全体の状態に関する説明文 */
     .condition-guide {
       margin-top: 10px;
       background: rgba(255, 255, 255, 0.1);
@@ -139,19 +137,31 @@
   </style>
 </head>
 <body>
-  <h1>eBay カメラ用HTML生成ツール</h1>
+  <h1>eBay ゲーム機本体用HTML生成ツール</h1>
   <div class="container">
 
-    <!-- シリアル番号 -->
+    <!-- メーカー / 機種名 -->
     <div class="section">
-      <label for="serial-number">シリアル番号:</label>
-      <input type="text" id="serial-number" placeholder="例: 12345678">
+      <label for="console-name">メーカー / 機種名:</label>
+      <input type="text" id="console-name" placeholder="例: SONY PlayStation 4">
     </div>
 
-    <!-- シャッター回数 -->
+    <!-- 型番 / 製造番号 -->
     <div class="section">
-      <label for="shutter-count">シャッター回数:</label>
-      <input type="text" id="shutter-count" placeholder="例: 12345">
+      <label for="model-number">型番 / 製造番号:</label>
+      <input type="text" id="model-number" placeholder="例: CUH-1000A">
+    </div>
+
+    <!-- リージョン -->
+    <div class="section">
+      <label for="region">リージョン (地域仕様):</label>
+      <select id="region">
+        <option value="">--選択してください--</option>
+        <option value="JP (Japanese)">日本版 (JP)</option>
+        <option value="US (North America)">北米版 (US)</option>
+        <option value="EU (Europe)">欧州版 (EU)</option>
+        <option value="Other">その他</option>
+      </select>
     </div>
 
     <!-- 商品全体の状態 -->
@@ -159,121 +169,83 @@
       <label for="condition">商品全体の状態:</label>
       <select id="condition">
         <option value="">--選択してください--</option>
-        <option value="New / 未使用">New / 未使用</option>
-        <option value="Unused (Dead Stock) / 未使用デッドストック">Unused (Dead Stock) / 未使用デッドストック</option>
-        <option value="Like New / ほぼ新品">Like New / ほぼ新品</option>
-        <option value="Excellent / 良品">Excellent / 良品</option>
-        <option value="Good / 並品">Good / 並品</option>
-        <option value="Fair / 難あり">Fair / 難あり</option>
-        <option value="AS IS / ジャンク">AS IS / ジャンク</option>
+        <option value="New (Unopened)">New / 未使用</option>
+        <option value="Unused (Dead Stock)">Unused (Dead Stock) / 長期保管未使用</option>
+        <option value="Like New">Like New / ほぼ新品</option>
+        <option value="Excellent">Excellent / 良品</option>
+        <option value="Good">Good / 並品</option>
+        <option value="Fair">Fair / 難あり</option>
+        <option value="AS IS (Junk)">AS IS / ジャンク</option>
       </select>
 
-      <!-- 商品全体の状態に関する説明 -->
       <div class="condition-guide">
         <strong>【商品全体の状態・選択基準】</strong>
         <ul>
-          <li><strong>New / 未使用</strong>: 未開封・使用歴なし、付属品完備</li>
-          <li><strong>Unused (Dead Stock)</strong>: 長期保管だが使用実績なし</li>
-          <li><strong>Like New / ほぼ新品</strong>: 使用感ほぼ無し</li>
-          <li><strong>Excellent / 良品</strong>: 小さなスレ・キズ程度、動作良好</li>
-          <li><strong>Good / 並品</strong>: 傷や使用感が多いが通常使用可</li>
-          <li><strong>Fair / 難あり</strong>: 動作不安定/要修理箇所あり</li>
-          <li><strong>AS IS / ジャンク</strong>: 動作保証なし、修理前提</li>
+          <li><strong>New (Unopened)</strong>: 未開封・使用歴なし、付属品完備</li>
+          <li><strong>Unused (Dead Stock)</strong>: 長期保管品だが使用履歴なし</li>
+          <li><strong>Like New</strong>: ほぼ新品同様の状態</li>
+          <li><strong>Excellent</strong>: 小傷や使用感はあるが良好</li>
+          <li><strong>Good</strong>: 傷や汚れ多めだが動作に問題なし</li>
+          <li><strong>Fair</strong>: 動作や外観に難がある場合</li>
+          <li><strong>AS IS (Junk)</strong>: 動作保証なし、修理前提</li>
         </ul>
       </div>
     </div>
 
-    <!-- 外観 -->
+    <!-- 外観(ボディ)の状態 -->
     <div class="section">
-      <label for="appearance">外観の状態:</label>
+      <label for="appearance">外観(ボディ)の状態:</label>
       <select id="appearance">
         <option value="">--選択してください--</option>
-        <option value="Very clean with no noticeable scratches.">非常にきれいで目立つ傷なし</option>
-        <option value="Minor scuffs or scratches from normal use.">通常使用に伴う小キズあり</option>
-        <option value="Significant scratches or paint peeling.">目立つ傷や塗装剥がれあり</option>
-        <option value="Heavy wear with dents or major damage.">大きな凹みやダメージあり</option>
+        <option value="Very clean, minimal scratches.">非常にきれいで傷が少ない</option>
+        <option value="Normal wear with minor scuffs.">通常の使用感、軽微なスレあり</option>
+        <option value="Some noticeable scratches or paint peeling.">目立つ傷や塗装剥がれあり</option>
+        <option value="Heavy damage or deep scratches.">大きなダメージや深い傷あり</option>
       </select>
     </div>
 
-    <!-- ファインダー -->
+    <!-- 機能面の状態 (起動/ゲームプレイ等) -->
     <div class="section">
-      <label for="finder">ファインダー:</label>
-      <select id="finder">
+      <label for="functionality">機能面の状態:</label>
+      <select id="functionality">
         <option value="">--選択してください--</option>
-        <option value="Clean and clear, no fog or fungus.">非常にクリアでカビや曇りなし</option>
-        <option value="Some dust or minor issues but still usable.">少しホコリ等あるが使用に問題なし</option>
-        <option value="Fog or fungus present, needs cleaning.">曇りやカビあり(要清掃)</option>
-        <option value="Severe issues making it difficult to use.">酷い曇り・カビで視認困難</option>
+        <option value="Fully operational, no issues.">問題なく起動・ゲームプレイ可能</option>
+        <option value="Occasional errors, minor issues.">時々エラーが出ることがある</option>
+        <option value="Needs maintenance (e.g. disc read errors).">要メンテナンス(読み込み不安定)</option>
+        <option value="Not working (cannot boot, major faults).">起動不可/重大な不具合あり</option>
       </select>
     </div>
 
-    <!-- レンズ -->
-    <div class="section">
-      <label for="lens">レンズ:</label>
-      <select id="lens">
-        <option value="">--選択してください--</option>
-        <option value="No scratches, no fungus, crystal clear.">傷・カビなし、非常にクリア</option>
-        <option value="Some dust or minor scratches.">軽微な埃や小傷あり</option>
-        <option value="Noticeable fungus or scratches.">目立つカビや傷あり</option>
-        <option value="Serious damage affecting image quality.">撮影に支障が出る程のダメージ</option>
-      </select>
-    </div>
-
-    <!-- シャッター -->
-    <div class="section">
-      <label for="shutter">シャッター:</label>
-      <select id="shutter">
-        <option value="">--選択してください--</option>
-        <option value="Works perfectly at all speeds.">全速正確に動作</option>
-        <option value="Occasional misfire or slight inaccuracy.">たまに誤動作/精度低下あり</option>
-        <option value="Not functioning, repair needed.">動作不可(要修理)</option>
-      </select>
-    </div>
-
-    <!-- 絞り -->
-    <div class="section">
-      <label for="aperture">絞り:</label>
-      <select id="aperture">
-        <option value="">--選択してください--</option>
-        <option value="Smooth and responsive.">スムーズに動作</option>
-        <option value="Sticky or slow (maintenance recommended).">やや粘り/動作遅れ(要メンテ)</option>
-        <option value="Not functioning, stuck.">動作不可(固着)</option>
-      </select>
-    </div>
-
-    <!-- フラッシュ -->
-    <div class="section">
-      <label for="flash">フラッシュ:</label>
-      <select id="flash">
-        <option value="">--選択してください--</option>
-        <option value="Fires properly, no issues.">正常発光</option>
-        <option value="Occasional misfire.">たまに不発あり</option>
-        <option value="Not working at all.">不発/動作不可</option>
-      </select>
-    </div>
-
-    <!-- 付属品チェックボックス -->
+    <!-- 付属品 (コントローラーやケーブル等) -->
     <div class="section">
       <label>付属品:</label>
       <div class="checkbox-group">
-        <label><input type="checkbox" id="battery"> バッテリー</label>
-        <label><input type="checkbox" id="charger"> 充電器</label>
-        <label><input type="checkbox" id="strap"> ストラップ</label>
-        <label><input type="checkbox" id="box"> 箱</label>
+        <label><input type="checkbox" id="controller"> 純正コントローラー</label>
+        <label><input type="checkbox" id="thirdparty-controller"> サードパーティ製コントローラー</label>
+        <label><input type="checkbox" id="hdmi-cable"> HDMIケーブル</label>
+        <label><input type="checkbox" id="av-cable"> AVケーブル</label>
+        <label><input type="checkbox" id="power-cable"> 電源ケーブル</label>
+        <label><input type="checkbox" id="box"> 元箱</label>
+        <label><input type="checkbox" id="manual"> 取扱説明書</label>
       </div>
     </div>
 
-    <!-- 出力＆ボタン -->
+    <!-- ストレージ容量など -->
+    <div class="section">
+      <label for="storage-info">ストレージ容量 / 拡張情報:</label>
+      <input type="text" id="storage-info" placeholder="例: 500GB HDD / 1TB SSD など">
+    </div>
+
+    <!-- 出力 -->
     <div class="section">
       <button onclick="generateHTML()">HTMLを生成</button>
       <button id="toggleViewBtn" onclick="toggleView()">表示切り替え</button>
-      <!-- コピー処理をテキストエリア(#output)の内容に変更 -->
       <button onclick="copyOutputText()">コピーする</button>
 
       <div id="output-container">
-        <!-- テキストエリア（英語HTML出力を表示） -->
+        <!-- コード表示用テキストエリア -->
         <textarea id="output" rows="10" readonly></textarea>
-        <!-- プレビュー表示 -->
+        <!-- プレビュー（コードをレンダリング） -->
         <div id="preview"></div>
       </div>
     </div>
@@ -283,28 +255,29 @@
     let currentView = "text"; // "text" or "preview"
 
     function generateHTML() {
-      // 入力情報を取得（未入力の場合 "N/A" にする）
-      const serialNumber = document.getElementById("serial-number").value || "N/A";
-      const shutterCount = document.getElementById("shutter-count").value || "N/A";
+      // 入力がない場合は "N/A" にする
+      const consoleName = document.getElementById("console-name").value || "N/A";
+      const modelNumber = document.getElementById("model-number").value || "N/A";
+      const region = document.getElementById("region").value || "N/A";
       const condition = document.getElementById("condition").value || "N/A";
       const appearance = document.getElementById("appearance").value || "N/A";
-      const finder = document.getElementById("finder").value || "N/A";
-      const lens = document.getElementById("lens").value || "N/A";
-      const shutter = document.getElementById("shutter").value || "N/A";
-      const aperture = document.getElementById("aperture").value || "N/A";
-      const flash = document.getElementById("flash").value || "N/A";
+      const functionality = document.getElementById("functionality").value || "N/A";
+      const storageInfo = document.getElementById("storage-info").value || "N/A";
 
       // 付属品
       const accessories = [];
-      if (document.getElementById("battery").checked) accessories.push("Battery");
-      if (document.getElementById("charger").checked) accessories.push("Charger");
-      if (document.getElementById("strap").checked) accessories.push("Strap");
-      if (document.getElementById("box").checked) accessories.push("Box");
+      if (document.getElementById("controller").checked) accessories.push("Official Controller");
+      if (document.getElementById("thirdparty-controller").checked) accessories.push("Third-Party Controller");
+      if (document.getElementById("hdmi-cable").checked) accessories.push("HDMI Cable");
+      if (document.getElementById("av-cable").checked) accessories.push("AV Cable");
+      if (document.getElementById("power-cable").checked) accessories.push("Power Cable");
+      if (document.getElementById("box").checked) accessories.push("Original Box");
+      if (document.getElementById("manual").checked) accessories.push("Manual");
 
       let accessoriesHTML = "";
       if (accessories.length > 0) {
         accessoriesHTML = `
-  <section style="padding: 15px; border-radius: 8px; margin-bottom: 20px;
+  <section style="padding: 15px; border-radius: 8px; margin-bottom: 20px; 
            background: linear-gradient(to right, #f8bbd0, #f48fb1); color: #fff;">
     <h2 style="font-size: 22px; margin-top: 0; border-left: 5px solid #ffffff; padding-left: 10px;">
       Included Accessories
@@ -315,11 +288,11 @@
   </section>`;
       }
 
-      // 英語のデフォルトセクション
+      // デフォルトセクション (英語)
       const defaultDescriptionHTML = `
-  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; 
            margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
-    <h2 style="font-size: 22px; color: #555; margin-top: 0;
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; 
                border-left: 5px solid #2196F3; padding-left: 10px;">
       Description
     </h2>
@@ -327,9 +300,9 @@
   </section>`;
 
       const defaultShippingHTML = `
-  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; 
            margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
-    <h2 style="font-size: 22px; color: #555; margin-top: 0;
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; 
                border-left: 5px solid #2196F3; padding-left: 10px;">
       Shipping
     </h2>
@@ -341,9 +314,9 @@
   </section>`;
 
       const defaultIntlBuyersHTML = `
-  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; 
            margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
-    <h2 style="font-size: 22px; color: #555; margin-top: 0;
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; 
                border-left: 5px solid #2196F3; padding-left: 10px;">
       International Buyers - Please Note
     </h2>
@@ -357,60 +330,70 @@
     </p>
   </section>`;
 
-      // メインHTML（英語表記）
+      // メイン出力HTML (すべて英語表記)
       let html = `
 <div style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0 auto; max-width: 800px;">
   <h1 style="font-size: 28px; color: #333; border-bottom: 2px solid #2196F3; padding-bottom: 10px; margin-top: 20px;">
     Item Title
   </h1>
-  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+
+  <!-- Details -->
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; 
            margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
-    <h2 style="font-size: 22px; color: #555; margin-top: 0;
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; 
                border-left: 5px solid #2196F3; padding-left: 10px;">
       Details
     </h2>
     <ul style="list-style: none; padding-left: 0; margin: 10px 0;">
+      <li><strong>Console Name:</strong> ${consoleName}</li>
+      <li><strong>Model / Serial:</strong> ${modelNumber}</li>
+      <li><strong>Region:</strong> ${region}</li>
       <li><strong>Total Condition:</strong> ${condition}</li>
-      <li><strong>Serial Number:</strong> ${serialNumber}</li>
-      <li><strong>Shutter Count:</strong> ${shutterCount}</li>
     </ul>
   </section>
-  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+
+  <!-- Appearance -->
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; 
            margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
-    <h2 style="font-size: 22px; color: #555; margin-top: 0;
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; 
                border-left: 5px solid #2196F3; padding-left: 10px;">
       Appearance
     </h2>
     <p style="margin: 5px 0;">${appearance}</p>
   </section>
-  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+
+  <!-- Functionality -->
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; 
            margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
-    <h2 style="font-size: 22px; color: #555; margin-top: 0;
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; 
                border-left: 5px solid #2196F3; padding-left: 10px;">
-      Optics
+      Functionality
     </h2>
-    <p style="margin: 5px 0;"><strong>Finder:</strong> ${finder}</p>
-    <p style="margin: 5px 0;"><strong>Lens:</strong> ${lens}</p>
+    <p style="margin: 5px 0;">${functionality}</p>
   </section>
-  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+
+  <!-- Storage -->
+  <section style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; 
            margin-bottom: 20px; background: linear-gradient(to right, #fafafa, #fdfdfd);">
-    <h2 style="font-size: 22px; color: #555; margin-top: 0;
+    <h2 style="font-size: 22px; color: #555; margin-top: 0; 
                border-left: 5px solid #2196F3; padding-left: 10px;">
-      Functional
+      Storage
     </h2>
-    <p style="margin: 5px 0;"><strong>Shutter:</strong> ${shutter}</p>
-    <p style="margin: 5px 0;"><strong>Aperture:</strong> ${aperture}</p>
-    <p style="margin: 5px 0;"><strong>Flash:</strong> ${flash}</p>
+    <p style="margin: 5px 0;">${storageInfo}</p>
   </section>
+
+  <!-- Accessories -->
   ${accessoriesHTML}
+
+  <!-- Default Descriptions -->
   ${defaultDescriptionHTML}
   ${defaultShippingHTML}
   ${defaultIntlBuyersHTML}
-</div>`;
+</div>
+      `;
 
-      // 不要な？を削除
+      // 不要な"?"除去＆改行空白削除
       html = html.replace(/[\?]+/g, "");
-      // 改行・空白調整
       html = html.replace(/\n\s*/g, " ");
 
       // テキストエリア & プレビューに反映
@@ -418,20 +401,20 @@
       document.getElementById("preview").innerHTML = html.trim();
     }
 
-    // コード表示 <-> プレビュー表示 の切り替え
+    // テキスト表示とプレビュー表示の切り替え
     function toggleView() {
       const output = document.getElementById("output");
       const preview = document.getElementById("preview");
       const toggleButton = document.getElementById("toggleViewBtn");
 
       if (currentView === "text") {
-        // テキスト表示からプレビューへ
+        // テキスト表示 -> プレビュー表示
         output.style.display = "none";
         preview.style.display = "block";
         toggleButton.textContent = "表示切り替え（コードを見る）";
         currentView = "preview";
       } else {
-        // プレビューからテキスト表示へ
+        // プレビュー表示 -> テキスト表示
         preview.style.display = "none";
         output.style.display = "block";
         toggleButton.textContent = "表示切り替え（プレビューを見る）";
@@ -439,13 +422,12 @@
       }
     }
 
-    // テキストエリア (#output) に表示されている文字列をコピー
+    // テキストエリア (#output) の文字列をコピー
     function copyOutputText() {
-      const codeToCopy = document.getElementById("output").value;
-
-      navigator.clipboard.writeText(codeToCopy)
+      const text = document.getElementById("output").value;
+      navigator.clipboard.writeText(text)
         .then(() => {
-          alert("コピーしました！\n\n" + codeToCopy);
+          alert("コピーしました！\n\n" + text);
         })
         .catch((err) => {
           console.error("コピーに失敗しました: ", err);
